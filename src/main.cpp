@@ -2,7 +2,6 @@
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <BLEUtils.h>
-#include <BLE2902.h>
 
 // Nordic UART Service — widely supported by phone apps (nRF Connect, LightBlue, etc.)
 #define NUS_SERVICE_UUID "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -19,7 +18,7 @@ class ServerCallbacks : public BLEServerCallbacks {
     Serial.println("[BLE] connected");
   }
 
-  void onDisconnect(BLEServer* p) override {
+  void onDisconnect(BLEServer* /*p*/) override {
     Serial.println("[BLE] disconnected — advertising again");
     BLEDevice::startAdvertising();
   }
@@ -27,12 +26,12 @@ class ServerCallbacks : public BLEServerCallbacks {
 
 class RxCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic* ch) override {
-    const std::string& v = ch->getValue();
-    if (v.empty()) {
+    String v = ch->getValue();
+    if (v.length() == 0) {
       return;
     }
     Serial.print("[BLE] RX: ");
-    Serial.println(v.c_str());
+    Serial.println(v);
 
     if (g_tx != nullptr) {
       g_tx->setValue(v);
@@ -48,7 +47,6 @@ void setup() {
   Serial.println("BLE Nordic UART server starting…");
 
   BLEDevice::init(kDeviceName);
-  BLEDevice::setPower(ESP_PWR_LVL_P9);
 
   g_server = BLEDevice::createServer();
   g_server->setCallbacks(new ServerCallbacks());
@@ -58,7 +56,6 @@ void setup() {
   g_tx = svc->createCharacteristic(
       NUS_TX_UUID,
       BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY);
-  g_tx->addDescriptor(new BLE2902());
   g_tx->setValue("ok");
 
   BLECharacteristic* rx = svc->createCharacteristic(

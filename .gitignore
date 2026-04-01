@@ -1,0 +1,10 @@
+# PlatformIO: build tree, cached libs, package manager state (recreated by `pio run`)
+.pio/
+
+# IDE / editor (optional: commit .vscode/extensions.json if you want recommended extensions)
+.vscode/*
+!.vscode/extensions.json
+
+# Clangd / compile DB (regenerate locally if needed)
+compile_commands.json
+.cache/
