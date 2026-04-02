@@ -4,6 +4,7 @@
 # IDE / editor (optional: commit .vscode/extensions.json if you want recommended extensions)
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 
 # Clangd / compile DB (regenerate locally if needed)
 compile_commands.json

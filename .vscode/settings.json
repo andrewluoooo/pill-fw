@@ -1,0 +1,9 @@
+{
+  "platformio-ide.useBuiltinPIOCore": false,
+  "platformio-ide.customPATH": "${userHome}/.platformio/penv/bin",
+  "platformio-ide.disablePIOHomeStartup": true,
+  "clangd.arguments": [
+    "--compile-commands-dir=/Users/andrewluo/GT/SP26/ECE4853/pill-fw",
+    "--query-driver=/Users/andrewluo/.platformio/packages/toolchain-*/bin/*,/Users/andrewluo/.platformio/packages/tool-*/bin/*"
+  ]
+}
